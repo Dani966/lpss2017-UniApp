@@ -5,7 +5,7 @@ package it.unicampania.uniapp.datamodel;
  * Created by pasquale on 20/04/17.
  */
 
-class Studente {
+public class Studente {
 
     private String matricola;
     private String cognome;
