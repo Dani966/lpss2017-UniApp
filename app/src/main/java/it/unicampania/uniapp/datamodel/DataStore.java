@@ -10,7 +10,7 @@ import java.util.List;
  * Created by pasquale on 20/04/17.
  */
 
-class DataStore {
+public class DataStore {
 
     // Lista locale degli studenti
     // Todo: da eliminare
@@ -21,6 +21,15 @@ class DataStore {
      */
     public DataStore() {
         studenti = new ArrayList<>();
+
+        // Dati fittizi per effettuare le prove
+        // Todo: da eliminare
+        Studente a = new Studente("A1800032", "Rossi", "Mario", 28);
+        Studente b = new Studente("A1800099", "Bianchi", "Luigi", 28);
+        Studente c = new Studente("A1800127", "Verdi", "Giovanni", 28);
+        studenti.add(a);
+        studenti.add(b);
+        studenti.add(c);
     }
 
     /**
