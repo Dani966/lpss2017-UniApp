@@ -65,6 +65,6 @@ class StudentiAdapter extends BaseAdapter {
         textCognome.setText(studente.getCognome());
         textNome.setText(studente.getNome());
 
-        return null;
+        return convertView;
     }
 }
