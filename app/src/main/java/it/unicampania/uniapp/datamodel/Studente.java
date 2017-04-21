@@ -1,11 +1,13 @@
 package it.unicampania.uniapp.datamodel;
 
+import java.io.Serializable;
+
 /**
  * Generica classe
  * Created by pasquale on 20/04/17.
  */
 
-public class Studente {
+public class Studente implements Serializable {
 
     private String matricola;
     private String cognome;

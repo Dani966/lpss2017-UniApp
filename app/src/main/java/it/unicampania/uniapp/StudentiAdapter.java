@@ -25,7 +25,7 @@ class StudentiAdapter extends BaseAdapter {
 
     /**
      * Costruttore
-     * @param context
+     * @param context contesto da utilizzare
      */
     public StudentiAdapter(Context context) {
         this.context = context;
@@ -39,7 +39,7 @@ class StudentiAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Studente getItem(int position) {
         return studenti.get(position);
     }
 
