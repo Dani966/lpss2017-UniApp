@@ -33,32 +33,24 @@ public class MainActivity extends AppCompatActivity {
 
     // Autenticazione Firebase
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Autenteciazione Firebase
+        // Autenticazione Firebase
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    Log.d(TAG, "login effettuato: " + user.getUid());
-                } else {
-                    Log.d(TAG, "Logout effettuato");
-                }
-            }
-        };
 
-        // Voglio impedire l'accesso senza il login
+        // Comportamento differenziato
         FirebaseUser user = mAuth.getCurrentUser();
         if (user == null) {
+            // Utente non autenticato, voglio impedire l'accesso
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+        } else {
+            // Utente autenticato.
+            // Nessuna operazione richiesta
         }
 
         listaStudenti = (ListView)findViewById(R.id.listaStudenti);
@@ -76,16 +68,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mAuthListener != null)
-            mAuth.removeAuthStateListener(mAuthListener);
-    }
 }
