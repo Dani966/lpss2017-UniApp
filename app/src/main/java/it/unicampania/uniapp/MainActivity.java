@@ -54,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+        // Voglio impedire l'accesso senza il login
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
         listaStudenti = (ListView)findViewById(R.id.listaStudenti);
         adapter = new StudentiAdapter(this);
         adapter.update(archivio.elencoStudenti());

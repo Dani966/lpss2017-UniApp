@@ -7,4 +7,6 @@
     <string name="username">Username:</string>
     <string name="password">Password:</string>
     <string name="login">Accedi</string>
+    <string name="errore_login">Errore nell\'autenticazione</string>
+    <string name="obbligatorio">Campo obbligatorio</string>
 </resources>
