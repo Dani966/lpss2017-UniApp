@@ -31,7 +31,10 @@ class StudentiAdapter extends BaseAdapter {
         this.context = context;
     }
 
-    public void update(List<Studente> newList) { studenti = newList; }
+    public void update(List<Studente> newList) {
+        studenti = newList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public int getCount() {

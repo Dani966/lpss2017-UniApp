@@ -1,16 +1,32 @@
 package it.unicampania.uniapp.datamodel;
 
+import android.provider.ContactsContract;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Classe che rappresenta il datamodel dell'applicazione.
- * Si dovrà interfacciare con il database
- * Prima versione: simulazione con dati locali
+ * Interfacciata con Firebase
  * Created by pasquale on 20/04/17.
  */
 
 public class DataStore {
+
+    // Costanti
+    private final static String TAG = "DataStore";
+    private final static String DB_STUDENTI = "studenti";
+    private final static String KEY_COGNOME = "cognome";
+    private final static String KEY_NOME = "nome";
+    private final static String KEY_CREDITI = "crediti";
+
+    private ValueEventListener listenerStudenti;
 
     // Lista locale degli studenti
     // Todo: da eliminare
@@ -21,16 +37,47 @@ public class DataStore {
      */
     public DataStore() {
         studenti = new ArrayList<>();
-
-        // Dati fittizi per effettuare le prove
-        // Todo: da eliminare
-        Studente a = new Studente("A1800032", "Rossi", "Mario", 28);
-        Studente b = new Studente("A1800099", "Bianchi", "Luigi", 28);
-        Studente c = new Studente("A1800127", "Verdi", "Giovanni", 28);
-        studenti.add(a);
-        studenti.add(b);
-        studenti.add(c);
     }
+
+    public interface UpdateListener {
+        void studentiAggiornati();
+    }
+
+    public void iniziaOsservazioneStudenti(final UpdateListener notifica) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference ref = database.getReference(DB_STUDENTI);
+
+        listenerStudenti = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                studenti.clear();
+                for (DataSnapshot elemento:dataSnapshot.getChildren()) {
+                    Studente studente = new Studente();
+                    studente.setMatricola(elemento.getKey());
+                    studente.setCognome(elemento.child(KEY_COGNOME).getValue(String.class));
+                    studente.setNome(elemento.child(KEY_NOME).getValue(String.class));
+                    studente.setCrediti(elemento.child(KEY_CREDITI).getValue(Integer.class));
+                    studenti.add(studente);
+                }
+                notifica.studentiAggiornati();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        ref.addValueEventListener(listenerStudenti);
+    }
+
+    public void terminaOsservazioneStudenti() {
+        if (listenerStudenti != null)
+            FirebaseDatabase.getInstance().getReference(DB_STUDENTI).removeEventListener(listenerStudenti);
+    }
+
+
 
     /**
      * Aggiunge uno studente al database

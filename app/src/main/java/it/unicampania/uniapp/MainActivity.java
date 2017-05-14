@@ -55,7 +55,14 @@ public class MainActivity extends AppCompatActivity {
 
         listaStudenti = (ListView)findViewById(R.id.listaStudenti);
         adapter = new StudentiAdapter(this);
-        adapter.update(archivio.elencoStudenti());
+
+        archivio.iniziaOsservazioneStudenti(new DataStore.UpdateListener() {
+            @Override
+            public void studentiAggiornati() {
+                adapter.update(archivio.elencoStudenti());
+            }
+        });
+
         listaStudenti.setAdapter(adapter);
         listaStudenti.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -68,4 +75,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        archivio.terminaOsservazioneStudenti();
+    }
 }
