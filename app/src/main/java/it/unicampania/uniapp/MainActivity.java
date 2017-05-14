@@ -73,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Studente s = new Studente();
+        s.setMatricola("A13001111");
+        s.setCognome("Fantozzi");
+        s.setNome("Ugo");
+        s.setCrediti(0);
+        archivio.aggiungiStudente(s);
     }
 
     @Override
