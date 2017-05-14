@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Studente s = new Studente();
-        s.setMatricola("A13001111");
-        s.setCognome("Fantozzi");
-        s.setNome("Ugo");
-        s.setCrediti(0);
+        s.setMatricola("A13008888");
+        s.setCognome("Filini");
+        s.setNome("Ragioner");
+        s.setCrediti(1);
         archivio.aggiungiStudente(s);
     }
 

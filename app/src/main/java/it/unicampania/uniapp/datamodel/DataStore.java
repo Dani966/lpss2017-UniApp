@@ -85,9 +85,11 @@ public class DataStore {
      */
     public void aggiungiStudente(Studente studente) {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(DB_STUDENTI).child(studente.getMatricola());
-        ref.child(KEY_COGNOME).setValue(studente.getCognome());
+        ref.setValue(studente);
+        /* ref.child(KEY_COGNOME).setValue(studente.getCognome());
         ref.child(KEY_NOME).setValue(studente.getNome());
         ref.child(KEY_CREDITI).setValue(studente.getCrediti());
+        */
     }
 
     /**
